@@ -7,10 +7,17 @@ from transformers import AutoTokenizer, AutoModel, AutoConfig
 from utils import load_all_samples, train_eval
 
 '''
-Given all the sentence embeddings, computes the mean of sub-tokens embeddings from stard_idx to end_idx.
-Is used to compute event and sentence representations. 
+Adaptation of code by: 
+https://github.com/wietsedv/bertje/blob/master/probing/probe.py
+and
+https://github.com/irenedini/tlink_probing/blob/main/code/roberta_probing.py
 '''
+
 def compute_embedding_mean(all_embeddings, start_idx, end_idx):
+  '''
+  Given all the sentence embeddings, computes the mean of sub-tokens embeddings from stard_idx to end_idx.
+  Is used to compute event and sentence representations. 
+  '''
   if start_idx == end_idx:
     return all_embeddings[start_idx]
   else:
