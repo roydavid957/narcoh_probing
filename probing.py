@@ -98,7 +98,7 @@ def main():
     args.device = "cuda" if torch.cuda.is_available() else "cpu"
 
     print('\n\nUsing sentence Embeddings:',args.use_sentence_embeddings)
-    print('\nUsing event Embeddings:', args.use_event)
+    print('\nUsing event Embeddings:', args.use_event_embeddings)
     print('\nUsing device:', args.device)
     print('\n\n')
 
