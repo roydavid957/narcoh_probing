@@ -57,8 +57,8 @@ def load_sct_story(line,nlp):
     false_end = line['RandomFifthSentenceQuiz2']
   sentences = [line['InputSentence1'],line['InputSentence2'],line['InputSentence3'],line['InputSentence4'],true_end,false_end]
   all_event_idx = [get_event_idx(sent,nlp) for sent in sentences]
-  line_true = [line['InputStoryid'],{'sent':line['InputSentence1'],'event':all_event_idx[0]},{'sent':line['InputSentence2'],'event':all_event_idx[1]},{'sent':line['InputSentence3'],'event':all_event_idx[2]},{'sent':line['InputSentence4'],'event':all_event_idx[3]},{'sent':true_end,'event':all_event_idx[4]},1]
-  line_false = [line['InputStoryid'],{'sent':line['InputSentence1'],'event':all_event_idx[0]},{'sent':line['InputSentence2'],'event':all_event_idx[1]},{'sent':line['InputSentence3'],'event':all_event_idx[2]},{'sent':line['InputSentence4'],'event':all_event_idx[3]},{'sent':false_end,'event':all_event_idx[5]},0]
+  line_true = [line['InputStoryid'],[{'sent':line['InputSentence1'],'event':all_event_idx[0]},{'sent':line['InputSentence2'],'event':all_event_idx[1]},{'sent':line['InputSentence3'],'event':all_event_idx[2]},{'sent':line['InputSentence4'],'event':all_event_idx[3]}],{'sent':true_end,'event':all_event_idx[4]},1]
+  line_false = [line['InputStoryid'],[{'sent':line['InputSentence1'],'event':all_event_idx[0]},{'sent':line['InputSentence2'],'event':all_event_idx[1]},{'sent':line['InputSentence3'],'event':all_event_idx[2]},{'sent':line['InputSentence4'],'event':all_event_idx[3]}],{'sent':false_end,'event':all_event_idx[5]},0]
   return line_true,line_false
 
 def load_cmcnc_story(line,nlp):
