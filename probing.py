@@ -105,7 +105,7 @@ def main():
     train_samples, labels_list = load_all_samples(args.train_file, args)                                             # Loading of train and test samples from
     valid_samples, test_label_list = load_all_samples(args.test_file, args) if args.test_file else [],labels_list    # train and test source files
     all_labels = list(set(test_label_list).union(set(labels_list)))
-    args.key = 'event_embedding' if args.use_event_embedding else 'embedding'
+    args.key = 'event_embedding' if args.use_event_embeddings else 'embedding'
     max_len_dev = max([len(np.concatenate(x.representation[1][f"input_{args.key}"]+[x.representation[1][f"target_{args.key}"]])) for x in train_samples])                           # get the max length
     max_len_test = max([len(np.concatenate(x.representation[1][f"input_{args.key}"]+[x.representation[1][f"target_{args.key}"]])) for x in valid_samples]) if valid_samples else 0  # for padding the (CMCNC) inputs 
     args.max_len = max_len_dev if max_len_dev >= max_len_test else max_len_test                                                                                                     # for the SVM inputs
