@@ -84,7 +84,7 @@ def main():
     parser.add_argument('-m', '--model_ckpt',
                       help='the name of the model (checkpoint) used for extracting representations.')
     parser.add_argument('-tr', '--train_file')
-    parser.add_argument('-ts', '--test_file', default='')
+    parser.add_argument('-ts', '--test_file', default='', help='Leave empty for k-fold cv')
     parser.add_argument('-ds', '--data_set', help='Specify dataset for dataloader: "SCT" (Story Cloze Task), "NCT" (Narrative Cloze Task), "CMCNC" (Coherent Multiple Choice Narrative Cloze)')
     parser.add_argument('-o', '--output_file',
                       help='absolute path to output file for classification report')
@@ -103,8 +103,11 @@ def main():
     print('\nUsing device:', args.device)
     print('\n\n')
 
-    train_samples, labels_list = load_all_samples(args.train_file, args)                                             # Loading of train and test samples from
-    valid_samples, test_label_list = load_all_samples(args.test_file, args) if args.test_file else [],labels_list    # train and test source files
+    train_samples, labels_list = load_all_samples(args.train_file, args)        # Loading of train and test samples from
+    if args.test_file == '':
+       valid_samples, test_label_list = [], labels_list # empty for k-fold cv
+    else:
+      valid_samples, test_label_list = load_all_samples(args.test_file, args)   # train and test source files
     all_labels = list(set(test_label_list).union(set(labels_list)))
 
     model_config = AutoConfig.from_pretrained(args.model_ckpt)    

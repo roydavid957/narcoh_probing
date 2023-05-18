@@ -52,9 +52,11 @@ def load_sct_story(line,nlp):
   if 'AnswerRightEnding' in line.keys():  # SCT dev
     true_end = line['RandomFifthSentenceQuiz1'] if int(line['AnswerRightEnding']) == 1 else line['RandomFifthSentenceQuiz2']
     false_end = line['RandomFifthSentenceQuiz2'] if true_end == line['RandomFifthSentenceQuiz1'] else line['RandomFifthSentenceQuiz1']
-  else:                                   # SCT test
-    true_end = line['RandomFifthSentenceQuiz1']
-    false_end = line['RandomFifthSentenceQuiz2']
+  else:                                   # SCT 2018 test
+    print('SCT label column not specified...')
+    exit()
+    # true_end = line['RandomFifthSentenceQuiz1']
+    # false_end = line['RandomFifthSentenceQuiz2']
   sentences = [line['InputSentence1'],line['InputSentence2'],line['InputSentence3'],line['InputSentence4'],true_end,false_end]
   all_event_idx = [get_event_idx(sent,nlp) for sent in sentences]
   line_true = [line['InputStoryid'],[{'sent':line['InputSentence1'],'event':all_event_idx[0]},{'sent':line['InputSentence2'],'event':all_event_idx[1]},{'sent':line['InputSentence3'],'event':all_event_idx[2]},{'sent':line['InputSentence4'],'event':all_event_idx[3]}],{'sent':true_end,'event':all_event_idx[4]},1]
