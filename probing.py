@@ -69,10 +69,12 @@ def create_features_vectors(samples,layer,args):
   for sample in samples:
     embeddings = sample.representation[layer]
     if len(embeddings[f"input_{args.key}"])>1:  # concatenate representation of each input sample and the target sample
-      # features.append(np.concatenate(embeddings[f"input_{key}"]+[embeddings[f"target_{key}"]]))                   # if no padding is needed, i.e. no varying input lenghts
-      concat_embed_list = np.concatenate(embeddings[f"input_{args.key}"]+[embeddings[f"target_{args.key}"]])
-      padded_concat_embed_list = np.pad(concat_embed_list, (0, args.max_len - len(concat_embed_list)), 'constant')
-      features.append(padded_concat_embed_list)                                                                     # if padding is needed, i.e. for CMCNC dataset
+      if args.data_set.lower() == 'cmcnc': 
+        concat_embed_list = np.concatenate(embeddings[f"input_{args.key}"]+[embeddings[f"target_{args.key}"]])
+        padded_concat_embed_list = np.pad(concat_embed_list, (0, args.max_len - len(concat_embed_list)), 'constant')
+        features.append(padded_concat_embed_list)                                                                     # if padding is needed, i.e. for CMCNC dataset
+      else:
+        features.append(np.concatenate(embeddings[f"input_{args.key}"]+[embeddings[f"target_{args.key}"]]))           # if no padding is needed, i.e. no varying input lenghts
     else:                                  # concatenate representation of the input and the target sample
       features.append(np.concatenate([embeddings[f"input_{args.key}"][0], embeddings[f"target_{args.key}"]]))
     labels.append(sample.label)
