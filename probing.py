@@ -123,7 +123,7 @@ def main():
 
     all_labels += ['macro avg', 'weighted avg', 'accuracy']
     
-    model_config = AutoConfig.from_pretrained(args.model_name)    
+    model_config = AutoConfig.from_pretrained(args.model_ckpt)    
     num_hidden_layers = model_config.num_hidden_layers 
     layers_scores = {label:[] for label in all_labels}
 
