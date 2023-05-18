@@ -132,7 +132,10 @@ def main():
     for layer in range(1, num_hidden_layers+1):                 # We execute the probing extracting representation from each layer
         print(f'\n\n------ layer {layer} ------\n')
         X_train, y_train = create_features_vectors(train_samples, layer, args)      # Creation of SVM inputs
-        X_test, y_test = create_features_vectors(valid_samples, layer, args) if valid_samples else [],[]
+        if valid_samples:
+          X_test, y_test = create_features_vectors(valid_samples, layer, args)
+        else:
+          X_test, y_test = [],[]  # empty for k-fold cv
         cls_report, y_pred_proba = train_eval(X_train, y_train, X_test, y_test, prob=args.output_prob)        # SVM training and evaluation
 
         if y_pred_proba:
