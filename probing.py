@@ -137,6 +137,7 @@ def main():
         else:
           X_test, y_test = [],[]  # empty for k-fold cv
         cls_report, y_pred_proba = train_eval(X_train, y_train, X_test, y_test, prob=args.output_prob)        # SVM training and evaluation
+        print(cls_report)
 
         if y_pred_proba:
           # Change the predicted output format
@@ -168,7 +169,7 @@ def main():
     
     with open(args.output_file, 'w+') as out_file:                  # The output file will contain a row for each class f1-score and a row for 
         for label in layers_scores:                                 # macro avg, weighted avg and accuracy
-            out_file.write('\t'.join([label]+layers_scores[label])+'\n')    # each row will contain a value for each layer
+            out_file.write(f'{[label]}\t{layers_scores[label]}\n')  # each row will contain a value for each layer
 
 if __name__ == '__main__':
     main()
