@@ -24,7 +24,7 @@ def compute_embedding_mean(all_embeddings, start_idx, end_idx):
     selected_embeddings = all_embeddings[start_idx:end_idx+1]
     return torch.mean(selected_embeddings, 0)
 
-def extract_samples_representations(samples,args)->list:
+def extract_samples_representations(samples,args):
 
   tokenizer = AutoTokenizer.from_pretrained(args.model_ckpt)
   model = AutoModel.from_pretrained(args.model_ckpt).to(args.device)
