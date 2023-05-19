@@ -90,6 +90,8 @@ def main():
     parser.add_argument('-ds', '--data_set', help='Specify dataset for dataloader: "SCT" (Story Cloze Task), "NCT" (Narrative Cloze Task), "CMCNC" (Coherent Multiple Choice Narrative Cloze)')
     parser.add_argument('-o', '--output_file',
                       help='absolute path to output file for classification report')
+    parser.add_argument('-l', '--lang',
+                      help='en/nl for spacy model for event extraction', default='en')
     parser.add_argument('-od', '--output_dir', 
                       help='absolute path to output directory (including last "/")', default='')
     parser.add_argument('-p', '--output_prob', default=False)
@@ -105,11 +107,12 @@ def main():
     print('\nUsing device:', args.device)
     print('\n\n')
 
-    train_samples, labels_list = load_all_samples(args.train_file, args)        # Loading of train and test samples from
+    spacy_model = "en_core_web_sm" if args.lang == 'en' else "nl_core_news_sm"
+    train_samples, labels_list = load_all_samples(args.train_file, args, spacy_model)        # Loading of train and test samples from
     if args.test_file == '':
        valid_samples, test_label_list = [], labels_list # empty for k-fold cv
     else:
-      valid_samples, test_label_list = load_all_samples(args.test_file, args)   # train and test source files
+      valid_samples, test_label_list = load_all_samples(args.test_file, args, spacy_model)   # train and test source files
     all_labels = list(set(test_label_list).union(set(labels_list)))
 
     model_config = AutoConfig.from_pretrained(args.model_ckpt)    
