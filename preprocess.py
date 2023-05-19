@@ -115,3 +115,6 @@ def main():
     out_path = f"{args.output_file.split('.')[0]}.tsv"
     df.to_csv(out_path,index=False,sep='\t')
 
+if __name__ == '__main__':
+    main()
+
