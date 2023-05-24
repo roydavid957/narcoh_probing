@@ -32,7 +32,7 @@ def extract_samples_representations(samples,args):
 
   for sample in samples:
 
-    if args.use_sentence_embeddings:
+    if not args.use_sentence_embeddings:
       encoded_input = [tokenizer(sample.input_sent, padding=True, truncation=True, return_tensors="pt").to(args.device)]
       input_token_ids = [np.where(np.array(encoded_input[0].word_ids()) == event_idx)[0] for event_idx in (sample.input_event_idx)]
     else:
